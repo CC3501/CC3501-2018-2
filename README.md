@@ -10,4 +10,4 @@ Semestre primavera 2018.
 | :-: |:-:|
 | Pablo Pizarro R. | pablo.pizarro@ing.uchile.cl |
 | Mauricio Araneda H.  | maurirocket@gmail.com |
-| María Trujillo B. | - |
+| M. Trujillo Berger | mtrujilloberger@gmail.com |
