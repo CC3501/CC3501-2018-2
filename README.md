@@ -1,6 +1,6 @@
-# CC3501-2018-1
+# CC3501-2018-2
 
-## CC3501-1 Modelación y Computación Gráfica para Ingenieros
+## CC3501 - Modelación y Computación Gráfica para Ingenieros
 Repositorio para almacenar las auxiliares de computación gráfica, fcfm, Uchile.
 
 Semestre primavera 2018.
