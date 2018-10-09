@@ -1,0 +1,6 @@
+Para correr los archivos es recomendable tener un IDE, ya sea Spyder o Pycharm:
+- En Spyder debe abrirse el archivo y apretar Run.
+- En Pycharm debe abrirse la carpeta como proyecto, hacer click derecho sobre el archivo y seleccionar Run.
+
+"ejemplo_numpy" contiene ejemplos sobre funcionalidades tipicas que se usaran con numpy.
+"numpy_matplotlib" contiene ejemplos sobre como utilizar numpy + matplotlib para tener funcionalidades similares a MATLAB.
