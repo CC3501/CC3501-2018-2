@@ -105,3 +105,16 @@ venv.bak/
 
 # Auxiliares
 *.ppt*
+
+# Archivos compilación latex
+*.aux
+*.lof
+*.lomycapequ
+*.lot
+*.out
+*.synctex.*
+*.toc
+*.log
+*.lol
+*.bbl
+*.blg
