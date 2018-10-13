@@ -1,13 +1,10 @@
 # coding=utf-8
 """
-Crea archivo ejemplo
+Triangulo
 """
 
 # Carga las librerías
-from PyOpenGLtoolbox.glpython import *
-from PyOpenGLtoolbox.opengl_lib import *
-from PyOpenGLtoolbox.camera import *
-from PyOpenGLtoolbox.utils import create_axes
+from PyOpenGLtoolbox import *
 
 # Constantes
 AXES_LENGTH = 3
@@ -22,7 +19,7 @@ WINDOW_SIZE = [800, 600]
 init_pygame(WINDOW_SIZE[0], WINDOW_SIZE[1], 'Triangulo', centered_window=True)
 init_gl(transparency=False, materialcolor=False, normalized=True, perspectivecorr=True, antialiasing=True,
         depth=True, smooth=True, verbose=True, version=True)
-reshape(*WINDOW_SIZE, nearplane=1)
+reshape_window(w=WINDOW_SIZE[0], h=WINDOW_SIZE[1], near=1, far=1000)
 clock = pygame.time.Clock()
 
 # Crea objetos
@@ -55,7 +52,6 @@ while True:
     clear_buffer()
     camera.place()
 
-    # Dibuja la luz
     glCallList(axis)
     glCallList(triangulo)
 
