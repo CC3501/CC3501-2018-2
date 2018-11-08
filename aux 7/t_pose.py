@@ -23,17 +23,6 @@ Definición de funciones
 def reshape_window_perspective(w, h, near, far, fov):
     """
     Crea la ventana con una cámara en perspectiva.
-
-    :param w: Ancho de la ventana
-    :param h: Altura de la ventana
-    :param near: Plano cercano
-    :param far: Plano lejano
-    :param fov: Ángulo de visión
-    :type w: int
-    :type h: int
-    :type near: float, int
-    :type far: float, int
-    :type fov: float, int
     """
     h = max(h, 1)
     glLoadIdentity()
@@ -44,6 +33,25 @@ def reshape_window_perspective(w, h, near, far, fov):
 
     # Ventana en perspectiva
     gluPerspective(fov, float(w) / float(h), near, far)
+
+    # Setea el modo de la cámara
+    glMatrixMode(GL_MODELVIEW)
+    glLoadIdentity()
+
+
+def reshape_window_ortho(w, h, left, right, bottom, top, near, far):
+    """
+    Crea la ventana con una cámara ortográfica.
+    """
+    h = max(h, 1)
+    glLoadIdentity()
+
+    # Crea el viewport
+    glViewport(0, 0, int(w), int(h))
+    glMatrixMode(GL_PROJECTION)
+
+    # Ventana en perspectiva
+    glOrtho(left, right, bottom, top, near, far)
 
     # Setea el modo de la cámara
     glMatrixMode(GL_MODELVIEW)
@@ -65,10 +73,11 @@ VENTANA_W = 800
 Inicio de OpenGL
 -------------------------------------------------------------------------------
 """
-init_pygame(VENTANA_W, VENTANA_H, 'Visualizador figuritas', centered_window=True)
+init_pygame(VENTANA_W, VENTANA_H, 'TPOSE', centered_window=True)
 init_gl(transparency=False, materialcolor=False, normalized=True, perspectivecorr=True, antialiasing=True,
         depth=True, smooth=True, verbose=True, version=True)
 reshape_window_perspective(w=VENTANA_W, h=VENTANA_H, near=1, far=1000, fov=FOV)
+# reshape_window_ortho(w=VENTANA_W, h=VENTANA_H, left=-15, right=15, bottom=-15, top=15, near=1, far=50)
 clock = pygame.time.Clock()
 
 """
@@ -78,17 +87,63 @@ Creación de modelos
 """
 axis = create_axes(10)  # Retorna una lista con los ejes, parte de la librería
 
-# Creamos una figura en 3D
-figurita = glGenLists(1)  # Inicia una lista
-glNewList(figurita, GL_COMPILE)
-glBegin(GL_POLYGON)  # Inicia una figura
-glColor3f(1, 0, 0)
-glVertex3f(-0.6, -0.75, 0.5)
-glColor3f(0, 1, 0)
-glVertex3f(0.6, -0.75, 0)
-glColor3f(0, 0, 1)
-glVertex3f(0, 0.75, 0)
-glEnd()  # Termina la figura
+# Generamos un cubo (1x1x1)
+cubo = create_cube()
+
+# Creamos a la persona
+tpose = glGenLists(1)  # Inicia una lista
+glNewList(tpose, GL_COMPILE)
+
+# La cabeza
+glPushMatrix()
+glTranslate(0, 0, 10)
+glColor4fv([1, 1, 0, 1])
+glCallList(cubo)
+glPopMatrix()
+
+# El cuello
+glPushMatrix()
+glTranslate(0, 0, 9)
+glScale(0.25, 0.25, 0.5)
+glCallList(cubo)
+glPopMatrix()
+
+# El torso
+glPushMatrix()
+glTranslate(0, 0, 6)
+glScale(2, 1, 2.5)
+glColor4fv([1, 0, 0, 1])
+glCallList(cubo)
+glPopMatrix()
+
+# Los brazos
+glPushMatrix()
+glTranslate(4, 0, 7.5)
+glScale(2, 0.5, 0.5)
+glColor4fv([1, 1, 0, 1])
+glCallList(cubo)
+glPopMatrix()
+glPushMatrix()
+glTranslate(-4, 0, 7.5)
+glScale(2, 0.5, 0.5)
+glColor4fv([1, 1, 0, 1])
+glCallList(cubo)
+glPopMatrix()
+
+# Las piernas
+glPushMatrix()
+glTranslate(1, 0, 1.5)
+glScale(0.5, 0.5, 2)
+glColor4fv([0, 0, 1, 1])
+glCallList(cubo)
+glPopMatrix()
+glPushMatrix()
+glTranslate(-1, 0, 1.5)
+glScale(0.5, 0.5, 2)
+glColor4fv([0, 0, 1, 1])
+glCallList(cubo)
+glPopMatrix()
+
 glEndList()  # Cierra la lista
 
 """
@@ -96,7 +151,7 @@ glEndList()  # Cierra la lista
 Creación de la cámara
 -------------------------------------------------------------------------------
 """
-CAMARA_POS = [10, 10, 10]  # Donde estoy (x,y,z)
+CAMARA_POS = [15, 15, 10]  # Donde estoy (x,y,z)
 CAMARA_CENTRO = [0, 0, 0]  # Dónde apunto (x,y,z)
 CAMARA_NORMAL = [0, 0, 1]  # La camara está parada normal al eje z
 
@@ -126,8 +181,9 @@ while True:
 
     # Dibujamos la figura, si queremos transformadas hay que crear una nueva matriz
     glPushMatrix()
-    glRotatef(ang, 1, 1, 0)  # Rota en (x,y,z) un determinado ángulo
-    glCallList(figurita)
+    glRotatef(ang, 0, 0, 1)  # Rota en (x,y,z) un determinado ángulo
+    # glScale(0.25, 0.25, 0.25)
+    glCallList(tpose)
     glPopMatrix()
 
     # Chequea eventos
@@ -139,4 +195,4 @@ while True:
     pygame.display.flip()
 
     # Aumentamos el ángulo de rotación
-    ang = (ang + 1) % 360
+    ang = (ang + 0.5) % 360
