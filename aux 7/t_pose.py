@@ -76,8 +76,8 @@ Inicio de OpenGL
 init_pygame(VENTANA_W, VENTANA_H, 'TPOSE', centered_window=True)
 init_gl(transparency=False, materialcolor=False, normalized=True, perspectivecorr=True, antialiasing=True,
         depth=True, smooth=True, verbose=True, version=True)
-reshape_window_perspective(w=VENTANA_W, h=VENTANA_H, near=1, far=1000, fov=FOV)
-# reshape_window_ortho(w=VENTANA_W, h=VENTANA_H, left=-15, right=15, bottom=-15, top=15, near=1, far=50)
+# reshape_window_perspective(w=VENTANA_W, h=VENTANA_H, near=0.01, far=1000, fov=60)
+reshape_window_ortho(w=VENTANA_W, h=VENTANA_H, left=-15, right=15, bottom=-15, top=15, near=1, far=50)
 clock = pygame.time.Clock()
 
 """
@@ -87,12 +87,22 @@ Creación de modelos
 """
 axis = create_axes(10)  # Retorna una lista con los ejes, parte de la librería
 
-# Generamos un cubo (1x1x1)
+# Generamos un cubo (2x2x2)
 cubo = create_cube()
+gorro = create_pyramid()
 
 # Creamos a la persona
 tpose = glGenLists(1)  # Inicia una lista
 glNewList(tpose, GL_COMPILE)
+
+# Gorro
+glPushMatrix()
+glTranslate(0, 0, 11)
+glRotate(180, 1, 0, 1)
+glScale(1, 1, 1)
+glColor4fv([1, 0, 1, 1])
+glCallList(gorro)
+glPopMatrix()
 
 # La cabeza
 glPushMatrix()
@@ -151,9 +161,9 @@ glEndList()  # Cierra la lista
 Creación de la cámara
 -------------------------------------------------------------------------------
 """
-CAMARA_POS = [15, 15, 10]  # Donde estoy (x,y,z)
-CAMARA_CENTRO = [0, 0, 5]  # Dónde apunto (x,y,z)
-CAMARA_NORMAL = [0, 0, 1]  # La camara está parada normal al eje z
+CAMARA_POS = [0, 0, 20]  # Donde estoy (x,y,z)
+CAMARA_CENTRO = [0, 0, 0]  # Dónde apunto (x,y,z)
+CAMARA_NORMAL = [1, 0, 0]  # La camara está parada normal al eje z
 
 """
 -------------------------------------------------------------------------------
@@ -182,7 +192,13 @@ while True:
     # Dibujamos la figura, si queremos transformadas hay que crear una nueva matriz
     glPushMatrix()
     glRotatef(ang, 0, 0, 1)  # Rota en (x,y,z) un determinado ángulo
-    # glScale(0.25, 0.25, 0.25)
+    glScale(0.25, 0.25, 0.25)
+    glCallList(tpose)
+    glPopMatrix()
+
+    glPushMatrix()
+    glTranslate(10, 0, 10)
+    glScale(0.1, 0.25, 1)
     glCallList(tpose)
     glPopMatrix()
 
@@ -195,4 +211,4 @@ while True:
     pygame.display.flip()
 
     # Aumentamos el ángulo de rotación
-    ang = (ang + 0.5) % 360
+    ang = (ang + 30.0/FPS) % 360
