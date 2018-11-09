@@ -22,7 +22,7 @@ Definición de funciones
 
 def reshape_window_perspective(w, h, near, far, fov):
     """
-    Crea la ventana con una cámara en perspectiva.
+    Crea la ventana con una proyección en perspectiva.
     """
     h = max(h, 1)
     glLoadIdentity()
@@ -31,7 +31,7 @@ def reshape_window_perspective(w, h, near, far, fov):
     glViewport(0, 0, int(w), int(h))
     glMatrixMode(GL_PROJECTION)
 
-    # Ventana en perspectiva
+    # Proyección en perspectiva
     gluPerspective(fov, float(w) / float(h), near, far)
 
     # Setea el modo de la cámara
@@ -41,7 +41,7 @@ def reshape_window_perspective(w, h, near, far, fov):
 
 def reshape_window_ortho(w, h, left, right, bottom, top, near, far):
     """
-    Crea la ventana con una cámara ortográfica.
+    Crea la ventana con una proyección ortográfica.
     """
     h = max(h, 1)
     glLoadIdentity()
@@ -50,7 +50,7 @@ def reshape_window_ortho(w, h, left, right, bottom, top, near, far):
     glViewport(0, 0, int(w), int(h))
     glMatrixMode(GL_PROJECTION)
 
-    # Ventana en perspectiva
+    # Proyección ortográfica
     glOrtho(left, right, bottom, top, near, far)
 
     # Setea el modo de la cámara
@@ -152,7 +152,7 @@ Creación de la cámara
 -------------------------------------------------------------------------------
 """
 CAMARA_POS = [15, 15, 10]  # Donde estoy (x,y,z)
-CAMARA_CENTRO = [0, 0, 0]  # Dónde apunto (x,y,z)
+CAMARA_CENTRO = [0, 0, 5]  # Dónde apunto (x,y,z)
 CAMARA_NORMAL = [0, 0, 1]  # La camara está parada normal al eje z
 
 """
