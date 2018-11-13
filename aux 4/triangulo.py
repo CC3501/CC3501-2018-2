@@ -19,13 +19,13 @@ WINDOW_SIZE = [800, 600]
 init_pygame(WINDOW_SIZE[0], WINDOW_SIZE[1], 'Triangulo', centered_window=True)
 init_gl(transparency=False, materialcolor=False, normalized=True, perspectivecorr=True, antialiasing=True,
         depth=True, smooth=True, verbose=True, version=True)
-reshape_window(w=WINDOW_SIZE[0], h=WINDOW_SIZE[1], near=1, far=1000)
+reshape_window_perspective(w=WINDOW_SIZE[0], h=WINDOW_SIZE[1], near=1, far=1000)
 clock = pygame.time.Clock()
 
 # Crea objetos
 axis = create_axes(AXES_LENGTH)
 camera = CameraR(CAMERA_RAD, CAMERA_PHI, CAMERA_THETA)
-camera.set_r_vel(0.5)  # Velocidad radial
+camera.set_r_vel(0.1)  # Velocidad radial
 
 # Crea el triangulo
 triangulo = glGenLists(1)  # Inicia una lista
@@ -63,23 +63,17 @@ while True:
     # Obtiene teclas presionadas
     keys = pygame.key.get_pressed()
 
-    # Rota camara eje x
+    # Rota camara ángulo theta
     if keys[K_w]:
-        camera.rotate_x(CAMERA_ROT_VEL)
+        camera.rotate_theta(CAMERA_ROT_VEL)
     elif keys[K_s]:
-        camera.rotate_x(-CAMERA_ROT_VEL)
+        camera.rotate_theta(-CAMERA_ROT_VEL)
 
-    # Rota camara eje y
+    # Rota camara ángulo phi
     if keys[K_a]:
-        camera.rotate_y(-CAMERA_ROT_VEL)
+        camera.rotate_phi(-CAMERA_ROT_VEL)
     elif keys[K_d]:
-        camera.rotate_y(CAMERA_ROT_VEL)
-
-    # Rota camara eje z
-    if keys[K_q]:
-        camera.rotate_z(-CAMERA_ROT_VEL)
-    elif keys[K_e]:
-        camera.rotate_z(CAMERA_ROT_VEL)
+        camera.rotate_phi(CAMERA_ROT_VEL)
 
     # Acerca / aleja la camara
     if keys[K_n]:
