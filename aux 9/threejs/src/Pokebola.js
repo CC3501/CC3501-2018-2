@@ -12,7 +12,7 @@
  * @param {Point2D} pos_inicial - Posición inicial
  * @param {Point2D} velocidad_inicial - Velocidad inicial
  * @param {number} diametro_pokebola - Diámetro pokebola
- * @param {[number]} color_pokebola - Color pokebola
+ * @param {number} color_pokebola - Color pokebola
  * @param {number} alpha_elastico - Coeficiente de rebote
  * @param {number} plano - Posición del plano
  * @constructor
@@ -33,7 +33,7 @@ function Pokebola(pos_inicial, velocidad_inicial, diametro_pokebola, color_pokeb
     this._color = color_pokebola;
     this._dt = 1 / 60; // Incremento de tiempo
     this._g = 9.81; // "Gravedad"
-    this._plano = plano;
+    this._pos_plano = plano;
     this._pos = pos_inicial;
     this._radio = diametro_pokebola / 2;
     this._vel = velocidad_inicial;
@@ -41,5 +41,58 @@ function Pokebola(pos_inicial, velocidad_inicial, diametro_pokebola, color_pokeb
     /**
      * Crea el modelo en three.js
      */
+    this.crear_modelo = function (scene) {
+
+        /**
+         * Crea una esfera
+         * Basado en: https://threejs.org/docs/#api/en/geometries/SphereGeometry
+         */
+        let geometry = new THREE.SphereGeometry(this._radio, 32, 32);
+        let material = new THREE.MeshPhongMaterial({color: this._color, dithering: true});
+        this._sphere = new THREE.Mesh(geometry, material);
+        this._sphere.castShadow = true;
+        scene.add(this._sphere);
+
+    };
+
+    /**
+     * Actualizar posición
+     */
+    this.actualizar_posicion = function () {
+
+        // Actualiza velocidad en z (gravedad)
+        self._vel.set_z(self._vel.get_z() - self._g * self._dt);  // v(t) = v(t-1) + a*dt
+
+        // Actualiza la posición
+        self._pos.set_x(self._pos.get_x() + self._vel.get_x() * self._dt);
+        self._pos.set_y(self._pos.get_y() + self._vel.get_y() * self._dt);
+        self._pos.set_z(self._pos.get_z() + self._vel.get_z() * self._dt);
+
+        // Busca colisiones
+        self._detectar_colision();
+
+        // Ubica el modelo
+        self._mover_modelo();
+
+    };
+
+    /**
+     * Detecta las colisiones.
+     */
+    this._detectar_colision = function () {
+        if (self._pos.get_z() - self._radio < self._pos_plano) {
+            self._vel.set_z(-self._vel.get_z() * self._alpha);
+            self._pos.set_z(self._pos_plano + self._radio);
+        }
+    };
+
+    /**
+     * Mueve el modelo.
+     */
+    this._mover_modelo = function () {
+        this._sphere.position.x = this._pos.get_x();
+        this._sphere.position.y = this._pos.get_z();
+        this._sphere.position.z = this._pos.get_y();
+    };
 
 }
