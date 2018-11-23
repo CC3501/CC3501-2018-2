@@ -27,6 +27,7 @@ function Point2D(posx, posy, posz) {
      * @param {number} x - Nueva posición
      */
     this.set_x = function (x) {
+        // noinspection JSUnusedGlobalSymbols
         this._posx = x;
     };
 
@@ -68,6 +69,13 @@ function Point2D(posx, posy, posz) {
      */
     this.get_z = function () {
         return this._posz;
+    };
+
+    /**
+     * Imprime la posición en consola
+     */
+    this.disp = function () {
+        console.log('(' + this._posx + ', ' + this._posy + ', ' + this._posz + ')');
     };
 
 }

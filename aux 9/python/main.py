@@ -53,10 +53,10 @@ glPopMatrix()
 glEndList()
 
 pokebola = Pokebola(Point3(0, -5, 5),  # Posición inicial
-                    Vector3(-0.3, 1, 0),  # Velocidad inicial
+                    Vector3(-0.5, 15, 0),  # Velocidad inicial
                     1,  # Radio
                     [1, 0, 0, 1],  # Color
-                    alpha_elastico=0.6,  # Coeficiente choque elástico
+                    alpha_elastico=0.7,  # Coeficiente choque elástico
                     plano=0  # Posición superior del plano en z (considerar mitad de la altura)
                     )
 

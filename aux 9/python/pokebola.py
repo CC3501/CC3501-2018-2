@@ -74,7 +74,7 @@ class Pokebola:
         """
 
         # Colisión con el plano
-        if self._pos.get_z() - self._radio < self._pos_plano:
+        if self._pos.get_z() - self._radio <= self._pos_plano:
             self._vel.set_z(-self._vel.get_z() * self._alpha)
             self._pos.set_z(self._pos_plano + self._radio)
 

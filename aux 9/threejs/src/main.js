@@ -536,7 +536,7 @@ function Aplicacion() {
         /**
          * Crea la pokebola
          */
-        this._pokebola = new Pokebola(new Point2D(-5, -5, 30), new Point2D(5, -5, 0), 10, 0xff0000, 0.8, -0.5);
+        this._pokebola = new Pokebola(new Point2D(-5, -5, 30), new Point2D(-45, -35, 10), 10, 0xff0000, 0.6, -0.5, 100);
         this._pokebola.crear_modelo(this._scene);
 
         /**
