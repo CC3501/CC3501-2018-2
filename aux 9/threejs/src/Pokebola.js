@@ -32,7 +32,7 @@ function Pokebola(pos_inicial, velocidad_inicial, diametro_pokebola, color_pokeb
     this._alpha = alpha_elastico;
     this._color = color_pokebola;
     this._dt = 1 / 60; // Incremento de tiempo
-    this._g = 9.81; // "Gravedad"
+    this._g = 50; // "Gravedad"
     this._pos_plano = plano;
     this._pos = pos_inicial;
     this._radio = diametro_pokebola / 2;
