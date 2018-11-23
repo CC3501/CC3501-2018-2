@@ -244,6 +244,9 @@ function Aplicacion() {
             // Preferencia de WebGL, puede ser "high-performance", "low-power" ó "default"
             powerPreference: "default",
 
+            // Precisión
+            precision: 'highp',
+
             // Los colores ya tienen incorporado las transparencias
             premultipliedAlpha: true,
 
