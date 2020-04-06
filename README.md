@@ -8,6 +8,6 @@ Semestre primavera 2018.
 ## Cuerpo docente
 | Auxiliar | correo |
 | :-: |:-:|
-| Pablo Pizarro R. | pablo.pizarro@ing.uchile.cl |
+| Pablo Pizarro R. | pablo@ppizarror.com |
 | Mauricio Araneda H.  | maurirocket@gmail.com |
 | M. Trujillo Berger | mtrujilloberger@gmail.com |
